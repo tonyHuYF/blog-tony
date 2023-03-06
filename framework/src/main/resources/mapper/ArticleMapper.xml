@@ -5,26 +5,28 @@
 <mapper namespace="com.tony.framework.mapper.ArticleMapper">
 
     <resultMap id="BaseResultMap" type="com.tony.framework.domain.Article">
-            <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="userId" column="user_id" jdbcType="INTEGER"/>
-            <result property="categoryId" column="category_id" jdbcType="INTEGER"/>
-            <result property="articleCover" column="article_cover" jdbcType="VARCHAR"/>
-            <result property="articleTitle" column="article_title" jdbcType="VARCHAR"/>
-            <result property="articleContent" column="article_content" jdbcType="VARCHAR"/>
-            <result property="articleType" column="article_type" jdbcType="TINYINT"/>
-            <result property="isTop" column="is_top" jdbcType="TINYINT"/>
-            <result property="isDelete" column="is_delete" jdbcType="TINYINT"/>
-            <result property="isRecommend" column="is_recommend" jdbcType="TINYINT"/>
-            <result property="status" column="status" jdbcType="TINYINT"/>
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="title" column="title" jdbcType="VARCHAR"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="summary" column="summary" jdbcType="VARCHAR"/>
+            <result property="categoryId" column="category_id" jdbcType="BIGINT"/>
+            <result property="thumbnail" column="thumbnail" jdbcType="VARCHAR"/>
+            <result property="isTop" column="is_top" jdbcType="CHAR"/>
+            <result property="status" column="status" jdbcType="CHAR"/>
+            <result property="viewCount" column="view_count" jdbcType="BIGINT"/>
+            <result property="isComment" column="is_comment" jdbcType="CHAR"/>
+            <result property="createBy" column="create_by" jdbcType="BIGINT"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateBy" column="update_by" jdbcType="BIGINT"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="delFlag" column="del_flag" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,user_id,category_id,
-        article_cover,article_title,article_content,
-        article_type,is_top,is_delete,
-        is_recommend,status,create_time,
-        update_time
+        id,title,content,
+        summary,category_id,thumbnail,
+        is_top,status,view_count,
+        is_comment,create_by,create_time,
+        update_by,update_time,del_flag
     </sql>
 </mapper>
