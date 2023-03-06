@@ -1,7 +1,7 @@
 package com.tony.blog.controller;
 
-import com.tony.framework.domain.Article;
 import com.tony.framework.domain.ResultBean;
+import com.tony.framework.domain.vo.HotArticleVo;
 import com.tony.framework.service.ArticleService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,9 +17,10 @@ public class ArticleController {
     @Resource
     private ArticleService articleService;
 
-    @GetMapping("/list")
-    public ResultBean< List<Article> > list(){
-        List<Article> list = articleService.list();
+
+    @GetMapping("/hotArticleList")
+    public ResultBean<List<HotArticleVo>> hotArticleList() {
+        List<HotArticleVo> list = articleService.getHotArticleList();
         return new ResultBean<>(list);
     }
 }
