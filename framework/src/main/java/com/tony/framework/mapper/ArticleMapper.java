@@ -3,6 +3,7 @@ package com.tony.framework.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.tony.framework.domain.Article;
+import com.tony.framework.domain.vo.ArticleDetailVo;
 import com.tony.framework.domain.vo.ArticleVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -18,6 +19,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     IPage<ArticleVo> getArticleList(IPage iPage, @Param("categoryId")Integer categoryId);
 
+    ArticleDetailVo getArticleById(Integer id);
 }
 
 

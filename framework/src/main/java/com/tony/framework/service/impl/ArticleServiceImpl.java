@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tony.framework.constants.SystemConstants;
 import com.tony.framework.domain.Article;
+import com.tony.framework.domain.vo.ArticleDetailVo;
 import com.tony.framework.domain.vo.ArticleVo;
 import com.tony.framework.domain.vo.HotArticleVo;
 import com.tony.framework.domain.vo.PageVo;
@@ -47,6 +48,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         PageVo pageVo = new PageVo(result.getTotal(), result.getRecords());
 
         return pageVo;
+    }
+
+    @Override
+    public ArticleDetailVo articleDetail(Integer id) {
+        ArticleDetailVo articleById = articleMapper.getArticleById(id);
+        return articleById;
     }
 }
 

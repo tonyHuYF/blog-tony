@@ -22,6 +22,10 @@ public class ArticleVo {
      */
     private String summary;
     /**
+     * 所属分类Id
+     */
+    private String categoryId;
+    /**
      * 所属分类名称
      */
     private String categoryName;
