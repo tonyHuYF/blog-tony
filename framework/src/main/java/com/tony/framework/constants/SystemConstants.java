@@ -9,4 +9,9 @@ public class SystemConstants {
      *  文章是正常分布状态
      */
     public static final int ARTICLE_STATUS_NORMAL = 0;
+
+    /**
+     *  友链是已审核状态
+     */
+    public static final int LINK_STATUS_NORMAL = 0;
 }
