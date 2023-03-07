@@ -1,8 +1,11 @@
 package com.tony.framework.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.tony.framework.domain.Article;
+import com.tony.framework.domain.vo.ArticleVo;
 import com.tony.framework.domain.vo.HotArticleVo;
+import com.tony.framework.domain.vo.PageVo;
 
 import java.util.List;
 
@@ -14,4 +17,6 @@ import java.util.List;
 public interface ArticleService extends IService<Article> {
 
     List<HotArticleVo> getHotArticleList();
+
+    PageVo<ArticleVo> getArticleList(Page page, Integer categoryId);
 }
