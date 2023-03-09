@@ -1,6 +1,7 @@
 package com.tony.framework.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.tony.framework.constants.RedisConstants;
 import com.tony.framework.domain.Error;
 import com.tony.framework.domain.LoginUser;
 import com.tony.framework.domain.User;
@@ -15,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class BlogLoginServiceImpl implements BlogLoginService {
@@ -43,7 +45,7 @@ public class BlogLoginServiceImpl implements BlogLoginService {
         String jwt = JwtUtil.createJWT(userId);
 
         //存入redis
-        redisCache.setCacheObject("blogUser:" + userId, loginUser);
+        redisCache.setCacheObject(RedisConstants.BLOG_USER + userId, loginUser, 120, TimeUnit.MINUTES);
 
         UserInfoVo userInfoVo = new UserInfoVo();
         BeanUtil.copyProperties(loginUser.getUser(), userInfoVo);
