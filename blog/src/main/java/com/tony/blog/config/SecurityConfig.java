@@ -1,6 +1,8 @@
 package com.tony.blog.config;
 
 import com.tony.blog.filter.JwtAuthenticationFilter;
+import com.tony.framework.handler.security.AccessDeniedHandlerImpl;
+import com.tony.framework.handler.security.AuthenticationEntryPointImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,6 +20,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Resource
     private JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @Resource
+    private AuthenticationEntryPointImpl authenticationEntryPoint;
+
+    @Resource
+    private AccessDeniedHandlerImpl accessDeniedHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -45,10 +53,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //除上面外的所有请求全部不需要认证即可访问
                 .anyRequest().permitAll();
 
+        //配置异常处理器
+        http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).accessDeniedHandler(accessDeniedHandler);
+
         http.logout().disable();
+        //把jwtAuthenticationFilter放进security filter顾虑链中
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
         //允许跨域
         http.cors();
 
-        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
     }
 }
