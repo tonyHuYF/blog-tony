@@ -1,5 +1,6 @@
 package com.tony.framework.domain;
 
+import com.tony.framework.exception.CommonException;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

@@ -1,12 +1,14 @@
 package com.tony.framework.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.tony.framework.constants.RedisConstants;
 import com.tony.framework.domain.Error;
 import com.tony.framework.domain.LoginUser;
 import com.tony.framework.domain.User;
 import com.tony.framework.domain.vo.BlogUserLoginVo;
 import com.tony.framework.domain.vo.UserInfoVo;
+import com.tony.framework.exception.CommonException;
 import com.tony.framework.service.BlogLoginService;
 import com.tony.framework.utils.JwtUtil;
 import com.tony.framework.utils.RedisCache;
@@ -29,6 +31,11 @@ public class BlogLoginServiceImpl implements BlogLoginService {
 
     @Override
     public BlogUserLoginVo login(User user) {
+
+        if (ObjectUtil.isEmpty(user.getUserName())) {
+            throw new CommonException(Error.username_not_exist);
+        }
+
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword());
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
