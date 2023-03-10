@@ -15,6 +15,7 @@ import com.tony.framework.utils.RedisCache;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -58,5 +59,12 @@ public class BlogLoginServiceImpl implements BlogLoginService {
         BeanUtil.copyProperties(loginUser.getUser(), userInfoVo);
 
         return new BlogUserLoginVo(jwt, userInfoVo);
+    }
+
+    @Override
+    public void logout() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        redisCache.deleteObject(RedisConstants.BLOG_USER + loginUser.getUser().getId());
     }
 }

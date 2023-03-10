@@ -6,4 +6,5 @@ import com.tony.framework.domain.vo.BlogUserLoginVo;
 public interface BlogLoginService {
     BlogUserLoginVo login(User user);
 
+    void logout();
 }

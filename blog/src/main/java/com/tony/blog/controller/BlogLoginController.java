@@ -21,4 +21,10 @@ public class BlogLoginController {
         BlogUserLoginVo vo = blogLoginService.login(user);
         return new ResultBean<>(vo);
     }
+
+    @PostMapping("/logout")
+    public ResultBean<Void> logout() {
+        blogLoginService.logout();
+        return new ResultBean<>();
+    }
 }
