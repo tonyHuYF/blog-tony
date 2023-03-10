@@ -1,5 +1,6 @@
-package com.tony.framework.domain;
+package com.tony.framework.exception;
 
+import com.tony.framework.domain.Error;
 import lombok.Data;
 
 /**
