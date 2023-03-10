@@ -53,7 +53,7 @@ public class BlogLoginServiceImpl implements BlogLoginService {
         String jwt = JwtUtil.createJWT(userId);
 
         //存入redis
-        redisCache.setCacheObject(RedisConstants.BLOG_USER + userId, loginUser, 120, TimeUnit.MINUTES);
+        redisCache.setCacheObject(RedisConstants.USER_BLOG + userId, loginUser, 120, TimeUnit.MINUTES);
 
         UserInfoVo userInfoVo = new UserInfoVo();
         BeanUtil.copyProperties(loginUser.getUser(), userInfoVo);
@@ -65,6 +65,6 @@ public class BlogLoginServiceImpl implements BlogLoginService {
     public void logout() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-        redisCache.deleteObject(RedisConstants.BLOG_USER + loginUser.getUser().getId());
+        redisCache.deleteObject(RedisConstants.USER_BLOG + loginUser.getUser().getId());
     }
 }

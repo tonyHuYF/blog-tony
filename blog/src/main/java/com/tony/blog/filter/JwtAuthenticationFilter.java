@@ -51,7 +51,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String userId = claims.getSubject();
 
-        LoginUser loginUser = redisCache.getCacheObject(RedisConstants.BLOG_USER + userId);
+        LoginUser loginUser = redisCache.getCacheObject(RedisConstants.USER_BLOG + userId);
 
         if (ObjectUtil.isEmpty(loginUser)) {
             ResultBean result = new ResultBean(Error.access_token_error);

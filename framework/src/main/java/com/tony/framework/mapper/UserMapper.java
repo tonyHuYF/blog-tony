@@ -1,8 +1,10 @@
 package com.tony.framework.mapper;
 
-import com.tony.framework.domain.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.tony.framework.domain.User;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
 * @author TonyHu

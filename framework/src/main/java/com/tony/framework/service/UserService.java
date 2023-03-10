@@ -1,7 +1,9 @@
 package com.tony.framework.service;
 
-import com.tony.framework.domain.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.tony.framework.domain.User;
+
+import java.util.List;
 
 /**
 * @author TonyHu
@@ -10,4 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface UserService extends IService<User> {
 
+    List<User> getUserList();
 }
