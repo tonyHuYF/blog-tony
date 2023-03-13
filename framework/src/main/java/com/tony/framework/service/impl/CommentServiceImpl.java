@@ -36,7 +36,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         LambdaQueryWrapper<Comment> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Comment::getType, "0");
         wrapper.eq(Comment::getArticleId, articleId);
-        wrapper.orderByAsc(Comment::getCreateTime);
+        wrapper.orderByDesc(Comment::getCreateTime);
 
         //查询该文章所有评论（根评论、子评论）
         List<Comment> list = list(wrapper);
@@ -74,7 +74,10 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         return new PageVo<>(commentPage.getTotal(), vos);
     }
 
-
+    @Override
+    public void addComment(Comment comment) {
+        save(comment);
+    }
 }
 
 

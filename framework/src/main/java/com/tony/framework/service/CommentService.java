@@ -14,4 +14,7 @@ import com.tony.framework.domain.vo.PageVo;
 public interface CommentService extends IService<Comment> {
 
     PageVo<CommentVo> commentList(Page page, Integer articleId);
+
+    void addComment(Comment comment);
+
 }
