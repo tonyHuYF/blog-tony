@@ -46,6 +46,8 @@ public class Error {
     public static final Error username_password_not_exist = new Error(30002, "用户名或密码错误!");
     public static final Error authentication_error = new Error(30003, "认证出现问题!");
     public static final Error file_upload_error = new Error(30004, "文件上传失败!");
+    public static final Error username_exist = new Error(30005, "用户名已存在!");
+    public static final Error nickrname_exist = new Error(30006, "昵称已存在!");
 
     private int code;
     private String message;

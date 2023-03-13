@@ -16,4 +16,9 @@ public interface UserService extends IService<User> {
     List<User> getUserList();
 
     UserInfoVo userInfo();
+
+
+    void updateUserInfo(User user);
+
+    void register(User user);
 }
