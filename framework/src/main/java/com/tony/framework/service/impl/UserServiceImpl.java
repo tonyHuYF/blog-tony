@@ -3,7 +3,6 @@ package com.tony.framework.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tony.framework.constants.RedisConstants;
-import com.tony.framework.domain.LoginUser;
 import com.tony.framework.domain.User;
 import com.tony.framework.domain.vo.UserInfoVo;
 import com.tony.framework.mapper.UserMapper;
@@ -44,10 +43,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Override
     public UserInfoVo userInfo() {
-        Long userId = SecurityUtils.getUserId();
-        LoginUser loginUser = (LoginUser) redisCache.getCacheObject(RedisConstants.USER_BLOG + userId);
+        User user = getById(SecurityUtils.getUserId());
         UserInfoVo vo = new UserInfoVo();
-        BeanUtil.copyProperties(loginUser.getUser(), vo);
+        BeanUtil.copyProperties(user, vo);
         return vo;
     }
 }
