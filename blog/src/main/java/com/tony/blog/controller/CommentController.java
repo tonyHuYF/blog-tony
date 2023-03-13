@@ -23,6 +23,12 @@ public class CommentController {
         return new ResultBean<>(vo);
     }
 
+    @GetMapping("/linkCommentList")
+    public ResultBean<PageVo<CommentVo>> linkCommentList(Integer pageNum, Integer pageSize) {
+        PageVo<CommentVo> vo = commentService.linkCommentList(new Page(pageNum, pageSize));
+        return new ResultBean<>(vo);
+    }
+
     @PostMapping
     public ResultBean<Void> addComment(@RequestBody Comment comment) {
         commentService.addComment(comment);

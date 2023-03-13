@@ -47,6 +47,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
                 .sorted(Comparator.comparing(Comment::getCreateTime))
                 .collect(Collectors.groupingBy(Comment::getRootId));
 
+        //分页查询只查根评论
+        wrapper.eq(Comment::getRootId, -1);
+
         Page<Comment> commentPage = page(page, wrapper);
 
         List<CommentVo> vos = BeanUtil.copyToList(commentPage.getRecords(), CommentVo.class);
@@ -61,8 +64,8 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
             p.setUserName(userMap.get(p.getCreateBy()));
             p.setToCommentUserName(userMap.get(p.getToCommentUserId()));
 
-            if (map.get(p.getRootId()) != null) {
-                List<CommentVo> commentVos = BeanUtil.copyToList(map.get(p.getRootId()), CommentVo.class);
+            if (map.get(p.getId()) != null) {
+                List<CommentVo> commentVos = BeanUtil.copyToList(map.get(p.getId()), CommentVo.class);
                 commentVos.forEach(child -> {
                     child.setUserName(userMap.get(child.getCreateBy()));
                     child.setToCommentUserName(userMap.get(child.getToCommentUserId()));
@@ -77,6 +80,51 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
     @Override
     public void addComment(Comment comment) {
         save(comment);
+    }
+
+    @Override
+    public PageVo<CommentVo> linkCommentList(Page page) {
+        LambdaQueryWrapper<Comment> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Comment::getType, "1");
+        wrapper.orderByDesc(Comment::getCreateTime);
+
+        //查询该文章所有评论（根评论、子评论）
+        List<Comment> list = list(wrapper);
+
+        //子评论map
+        Map<Long, List<Comment>> map = list.stream()
+                .filter(p -> p.getRootId() != -1)
+                .sorted(Comparator.comparing(Comment::getCreateTime))
+                .collect(Collectors.groupingBy(Comment::getRootId));
+
+        //分页查询只查根评论
+        wrapper.eq(Comment::getRootId, -1);
+
+        Page<Comment> commentPage = page(page, wrapper);
+
+        List<CommentVo> vos = BeanUtil.copyToList(commentPage.getRecords(), CommentVo.class);
+
+        List<User> userList = userService.getUserList();
+
+        Map<Long, String> userMap = userList.stream().collect(Collectors.toMap(k -> k.getId(), v -> v.getNickName()));
+
+        //补全子评论
+        vos.forEach(p -> {
+            //补全根评论人名称
+            p.setUserName(userMap.get(p.getCreateBy()));
+            p.setToCommentUserName(userMap.get(p.getToCommentUserId()));
+
+            if (map.get(p.getId()) != null) {
+                List<CommentVo> commentVos = BeanUtil.copyToList(map.get(p.getId()), CommentVo.class);
+                commentVos.forEach(child -> {
+                    child.setUserName(userMap.get(child.getCreateBy()));
+                    child.setToCommentUserName(userMap.get(child.getToCommentUserId()));
+                });
+                p.setChildren(commentVos);
+            }
+        });
+
+        return new PageVo<>(commentPage.getTotal(), vos);
     }
 }
 

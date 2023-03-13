@@ -17,4 +17,6 @@ public interface CommentService extends IService<Comment> {
 
     void addComment(Comment comment);
 
+    PageVo<CommentVo> linkCommentList(Page page);
+
 }
