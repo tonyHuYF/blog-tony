@@ -1,11 +1,15 @@
 package com.tony.framework.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tony.framework.constants.RedisConstants;
+import com.tony.framework.domain.LoginUser;
 import com.tony.framework.domain.User;
+import com.tony.framework.domain.vo.UserInfoVo;
 import com.tony.framework.mapper.UserMapper;
 import com.tony.framework.service.UserService;
 import com.tony.framework.utils.RedisCache;
+import com.tony.framework.utils.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -38,6 +42,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return list;
     }
 
+    @Override
+    public UserInfoVo userInfo() {
+        Long userId = SecurityUtils.getUserId();
+        LoginUser loginUser = (LoginUser) redisCache.getCacheObject(RedisConstants.USER_BLOG + userId);
+        UserInfoVo vo = new UserInfoVo();
+        BeanUtil.copyProperties(loginUser.getUser(), vo);
+        return vo;
+    }
 }
 
 
