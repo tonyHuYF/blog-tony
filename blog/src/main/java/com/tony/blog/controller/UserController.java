@@ -1,5 +1,6 @@
 package com.tony.blog.controller;
 
+import com.tony.framework.annotation.SystemLog;
 import com.tony.framework.domain.ResultBean;
 import com.tony.framework.domain.User;
 import com.tony.framework.domain.vo.UserInfoVo;
@@ -22,6 +23,7 @@ public class UserController {
     }
 
     @PutMapping("/userInfo")
+    @SystemLog(businessName = "更新用户信息")
     public ResultBean<Void> updateUserInfo(@RequestBody User user) {
         userService.updateUserInfo(user);
         return new ResultBean<>();
