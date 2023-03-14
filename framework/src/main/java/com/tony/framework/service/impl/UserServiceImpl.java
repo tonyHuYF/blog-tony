@@ -64,6 +64,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         User redisUser = loginUser.getUser();
         BeanUtil.copyProperties(user, redisUser);
         updateById(redisUser);
+        //更新redis
+        loginUser.setUser(redisUser);
+        redisCache.setCacheObject(RedisConstants.USER_BLOG + redisUser.getId(), loginUser, 120, TimeUnit.MINUTES);
     }
 
     @Override

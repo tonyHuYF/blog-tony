@@ -22,4 +22,6 @@ public interface ArticleService extends IService<Article> {
     PageVo<ArticleVo> getArticleList(Page page, Integer categoryId);
 
     ArticleDetailVo articleDetail(Integer id);
+
+    void updateViewCount(Integer id);
 }

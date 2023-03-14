@@ -7,10 +7,7 @@ import com.tony.framework.domain.vo.ArticleVo;
 import com.tony.framework.domain.vo.HotArticleVo;
 import com.tony.framework.domain.vo.PageVo;
 import com.tony.framework.service.ArticleService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -39,6 +36,12 @@ public class ArticleController {
     public ResultBean<ArticleDetailVo> articleDetail(@PathVariable Integer id) {
         ArticleDetailVo articleDetailVo = articleService.articleDetail(id);
         return new ResultBean<>(articleDetailVo);
+    }
+
+    @PutMapping("/updateViewCount/{id}")
+    public ResultBean<Void>updateViewCount(@PathVariable Integer id){
+        articleService.updateViewCount(id);
+        return new ResultBean<>();
     }
 
 }

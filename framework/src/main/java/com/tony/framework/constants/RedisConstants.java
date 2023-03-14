@@ -11,4 +11,10 @@ public class RedisConstants {
      */
     public static final String USER_LIST = "user:list";
 
+
+    /**
+     * 文章访问量redis前缀
+     */
+    public static final String ARTICLE_VIEW_COUNT = "article:viewCount";
+
 }
