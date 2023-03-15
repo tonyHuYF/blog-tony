@@ -2,6 +2,7 @@ package com.tony.framework.service;
 
 import com.tony.framework.domain.Menu;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.tony.framework.domain.vo.MenuVo;
 
 import java.util.List;
 
@@ -14,4 +15,5 @@ public interface MenuService extends IService<Menu> {
 
     List<String> selectPermsByUserId(Long id);
 
+    List<MenuVo> selectRouterMenuTreeByUserId(Long id);
 }

@@ -15,4 +15,28 @@
           and m.status = 0
           and m.del_flag = 0
     </select>
+
+
+    <select id="selectAllRouterMenu" resultType="com.tony.framework.domain.vo.MenuVo">
+        SELECT distinct m.*
+        from sys_menu m
+        WHERE m.menu_type in ('C', 'M')
+          and m.status = 0
+          and m.del_flag = 0
+        order by m.parent_id, m.order_num
+    </select>
+
+    <select id="selectRouterMenuTreeByUserId" parameterType="java.lang.Long"
+            resultType="com.tony.framework.domain.vo.MenuVo">
+        SELECT distinct m.*
+        from sys_user_role ur
+                 LEFT JOIN sys_role_menu rm on rm.role_id = ur.role_id
+                 LEFT JOIN sys_menu m on m.id = rm.menu_id
+        WHERE ur.user_id = #{id}
+          and m.menu_type in ('C', 'M')
+          and m.status = 0
+          and m.del_flag = 0
+        order by m.parent_id, m.order_num
+    </select>
+
 </mapper>

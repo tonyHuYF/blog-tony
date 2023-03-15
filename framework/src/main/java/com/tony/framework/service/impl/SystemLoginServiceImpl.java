@@ -6,6 +6,8 @@ import com.tony.framework.domain.Error;
 import com.tony.framework.domain.LoginUser;
 import com.tony.framework.domain.User;
 import com.tony.framework.domain.vo.AdminUserInfoVo;
+import com.tony.framework.domain.vo.MenuVo;
+import com.tony.framework.domain.vo.RoutersVo;
 import com.tony.framework.domain.vo.UserInfoVo;
 import com.tony.framework.exception.CommonException;
 import com.tony.framework.service.LoginService;
@@ -91,5 +93,15 @@ public class SystemLoginServiceImpl implements LoginService {
         BeanUtils.copyProperties(loginUser.getUser(), userInfoVo);
 
         return new AdminUserInfoVo(perms, roleKeyList, userInfoVo);
+    }
+
+    @Override
+    public RoutersVo getRouters() {
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+
+        List<MenuVo> menuVos = menuService.selectRouterMenuTreeByUserId(loginUser.getUser().getId());
+
+        RoutersVo vo = new RoutersVo(menuVos);
+        return vo;
     }
 }

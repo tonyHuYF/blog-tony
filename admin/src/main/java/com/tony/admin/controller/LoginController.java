@@ -3,6 +3,7 @@ package com.tony.admin.controller;
 import com.tony.framework.domain.ResultBean;
 import com.tony.framework.domain.User;
 import com.tony.framework.domain.vo.AdminUserInfoVo;
+import com.tony.framework.domain.vo.RoutersVo;
 import com.tony.framework.service.LoginService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +28,12 @@ public class LoginController {
     @GetMapping("/getInfo")
     public ResultBean<AdminUserInfoVo> getInfo() {
         AdminUserInfoVo vo = loginService.getInfo();
+        return new ResultBean<>(vo);
+    }
+
+    @GetMapping("/getRouters")
+    public ResultBean<RoutersVo> getRouters() {
+        RoutersVo vo = loginService.getRouters();
         return new ResultBean<>(vo);
     }
 
