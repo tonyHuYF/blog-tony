@@ -2,7 +2,9 @@ package com.tony.admin.controller;
 
 import com.tony.framework.domain.ResultBean;
 import com.tony.framework.domain.User;
+import com.tony.framework.domain.vo.AdminUserInfoVo;
 import com.tony.framework.service.LoginService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +22,12 @@ public class LoginController {
     public ResultBean<Map<String, String>> login(@RequestBody User user) {
         Map<String, String> map = loginService.login(user);
         return new ResultBean<>(map);
+    }
+
+    @GetMapping("/getInfo")
+    public ResultBean<AdminUserInfoVo> getInfo() {
+        AdminUserInfoVo vo = loginService.getInfo();
+        return new ResultBean<>(vo);
     }
 
 }

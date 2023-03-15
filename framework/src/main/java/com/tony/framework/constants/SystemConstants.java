@@ -14,4 +14,19 @@ public class SystemConstants {
      *  友链是已审核状态
      */
     public static final int LINK_STATUS_NORMAL = 0;
+
+    /**
+     *  系统正常状态
+     */
+    public static final int SYSTEM_STATUS_NORMAL = 0;
+
+    /**
+     *  菜单
+     */
+    public static final String MENU = "C";
+
+    /**
+     *  按钮
+     */
+    public static final String BUTTON = "F";
 }
