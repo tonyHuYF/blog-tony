@@ -1,4 +1,4 @@
-package com.tony.blog.controller;
+package com.tony.admin.controller;
 
 import com.tony.framework.domain.ResultBean;
 import com.tony.framework.domain.vo.CategoryVo;
@@ -11,14 +11,14 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/content/category")
 public class CategoryController {
     @Resource
     private CategoryService categoryService;
 
-    @GetMapping("/getCategoryList")
-    public ResultBean<List<CategoryVo>> getCategoryList() {
-        List<CategoryVo> list = categoryService.getCategoryList();
-        return new ResultBean<>(list);
+    @GetMapping("/listAllCategory")
+    public ResultBean<List<CategoryVo>> listAllCategory(){
+        List<CategoryVo> vo =  categoryService.listAllCategory();
+        return  new ResultBean<>(vo);
     }
 }

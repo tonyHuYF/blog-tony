@@ -3,10 +3,8 @@ package com.tony.framework.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.tony.framework.domain.Article;
-import com.tony.framework.domain.vo.ArticleDetailVo;
-import com.tony.framework.domain.vo.ArticleVo;
-import com.tony.framework.domain.vo.HotArticleVo;
-import com.tony.framework.domain.vo.PageVo;
+import com.tony.framework.domain.dto.ArticleDto;
+import com.tony.framework.domain.vo.*;
 
 import java.util.List;
 
@@ -24,4 +22,13 @@ public interface ArticleService extends IService<Article> {
     ArticleDetailVo articleDetail(Integer id);
 
     void updateViewCount(Integer id);
+
+    void insert(ArticleDto articleDto);
+
+    PageVo<ArticleListVo> getArticlePageList(Page page, ArticleDto param);
+
+    ArticleDto getDetailById(Integer id);
+
+    void delete(Integer id);
+
 }

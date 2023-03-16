@@ -11,6 +11,7 @@ import com.tony.framework.service.TagService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("/content/tag")
@@ -49,6 +50,12 @@ public class TagController {
     public ResultBean<Void> delete(@PathVariable Integer id) {
         tagService.removeById(id);
         return new ResultBean<>();
+    }
+
+    @GetMapping("/listAllTag")
+    public ResultBean<List<TagVo>> listAllTag() {
+        List<TagVo> vo = tagService.listAllTag();
+        return new ResultBean<>(vo);
     }
 
 }

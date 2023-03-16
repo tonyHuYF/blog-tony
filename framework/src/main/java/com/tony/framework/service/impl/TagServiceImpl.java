@@ -1,5 +1,6 @@
 package com.tony.framework.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -10,6 +11,8 @@ import com.tony.framework.domain.vo.TagVo;
 import com.tony.framework.mapper.TagMapper;
 import com.tony.framework.service.TagService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author TonyHu
@@ -25,6 +28,13 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag>
         IPage<TagVo> tagVoIPage = getBaseMapper().getTagList(page, param);
 
         return new PageVo<>(tagVoIPage.getTotal(), tagVoIPage.getRecords());
+    }
+
+    @Override
+    public List<TagVo> listAllTag() {
+        List<Tag> list = list();
+        List<TagVo> tagVos = BeanUtil.copyToList(list, TagVo.class);
+        return tagVos;
     }
 }
 

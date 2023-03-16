@@ -1,6 +1,9 @@
 package com.tony.framework.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.tony.framework.constants.SystemConstants;
 import com.tony.framework.domain.Category;
 import com.tony.framework.domain.vo.CategoryVo;
 import com.tony.framework.service.CategoryService;
@@ -25,6 +28,15 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
     @Override
     public List<CategoryVo> getCategoryList() {
         return categoryMapper.getCategoryList();
+    }
+
+    @Override
+    public List<CategoryVo> listAllCategory() {
+        LambdaQueryWrapper<Category> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Category::getStatus, SystemConstants.SYSTEM_STATUS_NORMAL);
+        List<Category> list = list(wrapper);
+        List<CategoryVo> categoryVos = BeanUtil.copyToList(list, CategoryVo.class);
+        return categoryVos;
     }
 }
 
