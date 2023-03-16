@@ -1,5 +1,7 @@
 package com.tony.framework.domain;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -31,18 +33,22 @@ public class Tag implements Serializable {
     /**
     * 
     */
+    @TableField(fill = FieldFill.INSERT)
     private Long createBy;
     /**
     * 
     */
+    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
     /**
     * 
     */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateBy;
     /**
     * 
     */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
     /**
     * 删除标志（0代表未删除，1代表已删除）
