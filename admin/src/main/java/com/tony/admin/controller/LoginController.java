@@ -25,6 +25,12 @@ public class LoginController {
         return new ResultBean<>(map);
     }
 
+    @PostMapping("/user/logout")
+    public ResultBean<Void> logout() {
+        loginService.logout();
+        return new ResultBean<>();
+    }
+
     @GetMapping("/getInfo")
     public ResultBean<AdminUserInfoVo> getInfo() {
         AdminUserInfoVo vo = loginService.getInfo();
