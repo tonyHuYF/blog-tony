@@ -29,4 +29,14 @@ public class SystemConstants {
      *  按钮
      */
     public static final String BUTTON = "F";
+
+    /**
+     *  系统用户（前台）
+     */
+    public static final String BLOG = "0";
+
+    /**
+     *  系统用户（后台）
+     */
+    public static final String ADMIN = "1";
 }

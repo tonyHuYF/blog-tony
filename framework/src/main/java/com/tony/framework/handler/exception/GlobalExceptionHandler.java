@@ -8,6 +8,7 @@ import com.tony.framework.exception.CommonException;
 import com.tony.framework.utils.ExceptionUtil;
 import com.tony.framework.utils.RequestUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -35,6 +36,11 @@ public class GlobalExceptionHandler {
         String prefix = RandomUtil.randomString(10);
         log.error(ExceptionUtil.getErrorInfoFromException(ex, prefix));
         return new ResultBean<>(Error.internal_server_error, prefix);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public void accessDeniedException(AccessDeniedException e) throws AccessDeniedException {
+        throw e;
     }
 
     /**

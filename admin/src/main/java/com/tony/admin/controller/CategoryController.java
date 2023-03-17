@@ -9,6 +9,7 @@ import com.tony.framework.domain.vo.CategoryListVo;
 import com.tony.framework.domain.vo.CategoryVo;
 import com.tony.framework.domain.vo.PageVo;
 import com.tony.framework.service.CategoryService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -22,6 +23,7 @@ public class CategoryController {
     @Resource
     private CategoryService categoryService;
 
+    @PreAuthorize("@ps.hasPermission('content:category:list')")
     @GetMapping("/listAllCategory")
     public ResultBean<List<CategoryVo>> listAllCategory() {
         List<CategoryVo> vo = categoryService.listAllCategory();
@@ -37,34 +39,34 @@ public class CategoryController {
 
 
     @GetMapping("/{id}")
-    public ResultBean<CategoryListVo> getById(@PathVariable Integer id){
+    public ResultBean<CategoryListVo> getById(@PathVariable Integer id) {
         Category category = categoryService.getById(id);
         CategoryListVo vo = new CategoryListVo();
-        BeanUtil.copyProperties(category,vo);
+        BeanUtil.copyProperties(category, vo);
         return new ResultBean<>(vo);
     }
 
     @DeleteMapping("/{id}")
-    public ResultBean<Void> delete(@PathVariable Integer id){
+    public ResultBean<Void> delete(@PathVariable Integer id) {
         categoryService.removeById(id);
         return new ResultBean<>();
     }
 
     @PostMapping
-    public ResultBean<Void> insert(@RequestBody Category category){
+    public ResultBean<Void> insert(@RequestBody Category category) {
         categoryService.save(category);
         return new ResultBean<>();
     }
 
     @PutMapping
-    public ResultBean<Void> update(@RequestBody Category category){
+    public ResultBean<Void> update(@RequestBody Category category) {
         categoryService.updateById(category);
         return new ResultBean<>();
     }
 
     @GetMapping("/export")
     public ResultBean<Void> export(HttpServletResponse res, CategoryListDto param) throws IOException {
-        categoryService.export(res,param);
+        categoryService.export(res, param);
         return new ResultBean<>();
     }
 
