@@ -1,9 +1,14 @@
 package com.tony.framework.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tony.framework.domain.Category;
+import com.tony.framework.domain.dto.CategoryListDto;
+import com.tony.framework.domain.vo.CategoryListVo;
 import com.tony.framework.domain.vo.CategoryVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,6 +22,8 @@ import java.util.List;
 public interface CategoryMapper extends BaseMapper<Category> {
 
     List<CategoryVo> getCategoryList();
+
+    IPage<CategoryListVo> getCategoryListPage(Page page, @Param("param") CategoryListDto param);
 }
 
 
