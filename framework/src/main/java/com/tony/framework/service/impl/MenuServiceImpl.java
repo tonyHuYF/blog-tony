@@ -1,9 +1,12 @@
 package com.tony.framework.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tony.framework.constants.SystemConstants;
 import com.tony.framework.domain.Menu;
+import com.tony.framework.domain.vo.MenuListVo;
 import com.tony.framework.domain.vo.MenuVo;
 import com.tony.framework.mapper.MenuMapper;
 import com.tony.framework.service.MenuService;
@@ -62,6 +65,18 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu>
     }
 
 
+    @Override
+    public List<MenuListVo> allList(String menuName, String status) {
+        LambdaQueryWrapper<Menu> wrapper = new LambdaQueryWrapper<>();
+        wrapper.like(ObjectUtil.isNotEmpty(menuName), Menu::getMenuName, menuName);
+        wrapper.eq(ObjectUtil.isNotEmpty(status), Menu::getStatus, status);
+        wrapper.orderByAsc(Menu::getParentId, Menu::getOrderNum);
+
+        List<Menu> list = list(wrapper);
+
+        List<MenuListVo> vos = BeanUtil.copyToList(list, MenuListVo.class);
+        return vos;
+    }
 }
 
 
