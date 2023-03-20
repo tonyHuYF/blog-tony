@@ -73,6 +73,14 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>
         removeById(id);
         roleMapper.deleteRelate(id);
     }
+
+    @Override
+    public List<Role> listAllRole() {
+        LambdaQueryWrapper<Role> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Role::getStatus, "0");
+        List<Role> list = list(wrapper);
+        return list;
+    }
 }
 
 

@@ -3,6 +3,7 @@ package com.tony.framework.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.tony.framework.domain.Role;
 import com.tony.framework.domain.dto.RoleInsertDto;
+import com.tony.framework.domain.dto.UserInsertDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -23,6 +24,10 @@ public interface RoleMapper extends BaseMapper<Role> {
 
     void deleteRelate(Integer id);
 
+
+    void insertUserRelate(@Param("param")UserInsertDto param);
+
+    void deleteUserRelate(String id);
 }
 
 

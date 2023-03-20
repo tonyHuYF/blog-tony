@@ -12,6 +12,7 @@ import com.tony.framework.service.RoleService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("/system/role")
@@ -56,6 +57,12 @@ public class RoleController {
         role.setStatus(param.getStatus());
         roleService.updateById(role);
         return new ResultBean<>();
+    }
+
+    @GetMapping("/listAllRole")
+    public ResultBean<List<Role>> listAllRole() {
+        List<Role> vo = roleService.listAllRole();
+        return new ResultBean<>(vo);
     }
 
 }

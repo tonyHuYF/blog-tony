@@ -1,20 +1,28 @@
 package com.tony.framework.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tony.framework.constants.RedisConstants;
 import com.tony.framework.domain.Error;
 import com.tony.framework.domain.LoginUser;
 import com.tony.framework.domain.User;
+import com.tony.framework.domain.dto.UserInsertDto;
+import com.tony.framework.domain.dto.UserListDto;
+import com.tony.framework.domain.vo.PageVo;
 import com.tony.framework.domain.vo.UserInfoVo;
+import com.tony.framework.domain.vo.UserListVo;
 import com.tony.framework.exception.CommonException;
+import com.tony.framework.mapper.RoleMapper;
 import com.tony.framework.mapper.UserMapper;
 import com.tony.framework.service.UserService;
 import com.tony.framework.utils.RedisCache;
 import com.tony.framework.utils.SecurityUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -34,6 +42,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Resource
     private PasswordEncoder passwordEncoder;
+
+    @Resource
+    private RoleMapper roleMapper;
 
     @Override
     public List<User> getUserList() {
@@ -99,6 +110,37 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         wrapper.eq(User::getNickName, nickName);
         long count = count(wrapper);
         return count > 0;
+    }
+
+    @Override
+    public PageVo<UserListVo> listPage(Page page, UserListDto param) {
+        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
+        wrapper.like(ObjectUtil.isNotEmpty(param.getUserName()), User::getUserName, param.getUserName());
+        wrapper.like(ObjectUtil.isNotEmpty(param.getStatus()), User::getStatus, param.getStatus());
+        wrapper.like(ObjectUtil.isNotEmpty(param.getPhonenumber()), User::getPhonenumber, param.getPhonenumber());
+        Page data = page(page, wrapper);
+
+        return new PageVo<>(data.getTotal(), BeanUtil.copyToList(data.getRecords(), UserListVo.class));
+    }
+
+    @Override
+    @Transactional
+    public void insert(UserInsertDto param) {
+        User user = new User();
+        BeanUtil.copyProperties(param, user);
+        save(user);
+
+        if (ObjectUtil.isNotEmpty(param.getRoleIds())) {
+            param.setId(user.getId());
+            roleMapper.insertUserRelate(param);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void delete(String id) {
+        removeById(id);
+        roleMapper.deleteUserRelate(id);
     }
 }
 

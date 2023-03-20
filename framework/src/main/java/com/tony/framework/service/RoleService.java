@@ -25,4 +25,6 @@ public interface RoleService extends IService<Role> {
 
     void delete(Integer id);
 
+    List<Role> listAllRole();
+
 }
