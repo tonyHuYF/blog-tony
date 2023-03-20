@@ -3,6 +3,8 @@ package com.tony.admin.controller;
 import com.tony.framework.domain.Menu;
 import com.tony.framework.domain.ResultBean;
 import com.tony.framework.domain.vo.MenuListVo;
+import com.tony.framework.domain.vo.RoleMenuTreeUpdateVo;
+import com.tony.framework.domain.vo.RoleMenuTreeVo;
 import com.tony.framework.service.MenuService;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +20,8 @@ public class MenuController {
 
 
     @GetMapping("/list")
-    public ResultBean<List<MenuListVo>> allList(String menuName,String status) {
-        List<MenuListVo> vo = menuService.allList(menuName,status);
+    public ResultBean<List<MenuListVo>> allList(String menuName, String status) {
+        List<MenuListVo> vo = menuService.allList(menuName, status);
         return new ResultBean<>(vo);
     }
 
@@ -46,6 +48,18 @@ public class MenuController {
     public ResultBean<Void> update(@RequestBody Menu menu) {
         menuService.updateById(menu);
         return new ResultBean<>();
+    }
+
+    @GetMapping("/treeselect")
+    public ResultBean<List<RoleMenuTreeVo>> treeSelect(){
+        List<RoleMenuTreeVo> vo = menuService.treeSelect();
+        return new ResultBean<>(vo);
+    }
+
+    @GetMapping("/roleMenuTreeselect/{id}")
+    public ResultBean<RoleMenuTreeUpdateVo> roleMenuTreeSelect(@PathVariable Integer id) {
+        RoleMenuTreeUpdateVo vo  =menuService.roleMenuTreeSelect(id);
+        return new ResultBean<>(vo);
     }
 
 }

@@ -1,7 +1,12 @@
 package com.tony.framework.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tony.framework.domain.Role;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.tony.framework.domain.dto.RoleInsertDto;
+import com.tony.framework.domain.dto.RoleListDto;
+import com.tony.framework.domain.vo.PageVo;
+import com.tony.framework.domain.vo.RoleVo;
 
 import java.util.List;
 
@@ -13,5 +18,11 @@ import java.util.List;
 public interface RoleService extends IService<Role> {
 
     List<String> selectRoleKeyByUserId(Long id);
+
+    PageVo<RoleVo> listPage(Page page, RoleListDto param);
+
+    void insert(RoleInsertDto roleInsertDto);
+
+    void delete(Integer id);
 
 }

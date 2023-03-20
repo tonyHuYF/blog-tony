@@ -8,6 +8,8 @@ import com.tony.framework.constants.SystemConstants;
 import com.tony.framework.domain.Menu;
 import com.tony.framework.domain.vo.MenuListVo;
 import com.tony.framework.domain.vo.MenuVo;
+import com.tony.framework.domain.vo.RoleMenuTreeUpdateVo;
+import com.tony.framework.domain.vo.RoleMenuTreeVo;
 import com.tony.framework.mapper.MenuMapper;
 import com.tony.framework.service.MenuService;
 import org.springframework.stereotype.Service;
@@ -76,6 +78,38 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu>
 
         List<MenuListVo> vos = BeanUtil.copyToList(list, MenuListVo.class);
         return vos;
+    }
+
+    @Override
+    public RoleMenuTreeUpdateVo roleMenuTreeSelect(Integer id) {
+
+        RoleMenuTreeUpdateVo result = new RoleMenuTreeUpdateVo();
+
+        List<RoleMenuTreeVo> treeVos = treeSelect();
+
+        result.setMenus(treeVos);
+
+        List<Long> checkIds = getBaseMapper().selectMenuTreeByRoleId(id.longValue());
+
+        result.setCheckedKeys(checkIds);
+
+        return result;
+    }
+
+    @Override
+    public List<RoleMenuTreeVo> treeSelect() {
+        List<MenuVo> menuVos = getBaseMapper().selectAllRouterMenu();
+        List<RoleMenuTreeVo> list = menuVos.stream().map(p ->
+                new RoleMenuTreeVo(p.getId(), p.getMenuName(), p.getParentId())).collect(Collectors.toList());
+
+        Map<Long, List<RoleMenuTreeVo>> map = list.stream().collect(Collectors.groupingBy(RoleMenuTreeVo::getParentId));
+
+        //补录子菜单
+        list.forEach(p -> p.setChildren(map.get(p.getId())));
+
+        //构建菜单权限树
+        List<RoleMenuTreeVo> treeMenus = list.stream().filter(p -> p.getParentId() == 0).collect(Collectors.toList());
+        return treeMenus;
     }
 }
 

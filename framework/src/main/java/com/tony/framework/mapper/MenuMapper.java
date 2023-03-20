@@ -1,7 +1,7 @@
 package com.tony.framework.mapper;
 
-import com.tony.framework.domain.Menu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.tony.framework.domain.Menu;
 import com.tony.framework.domain.vo.MenuVo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -21,6 +21,8 @@ public interface MenuMapper extends BaseMapper<Menu> {
     List<MenuVo> selectAllRouterMenu();
 
     List<MenuVo> selectRouterMenuTreeByUserId(Long id);
+
+    List<Long> selectMenuTreeByRoleId(Long id);
 
 }
 
